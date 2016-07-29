@@ -93,6 +93,30 @@ describe('plugin addResults', () => {
         .catch(done)
     })
 
+    it('should have timestamp', (done) => {
+      const plugin = plugiator.create('plugin', (app, opts, next) => {
+        app.addResults('foo')
+        next()
+      })
+      return registrator
+        .register({ register: plugin, options: opts})
+        .then(() => expect(app.results[0].timestamp).to.be.not.undefined)
+        .then(() => done())
+        .catch(done)
+    })
+
+    it('should add specific timestamp if specified', (done) => {
+      const plugin = plugiator.create('plugin', (app, opts, next) => {
+        app.addResults('foo', '2014-10-23')
+        next()
+      })
+      return registrator
+        .register({ register: plugin })
+        .then(() => expect(app.results[0].timestamp).to.eq(1414022400000))
+        .then(() => done())
+        .catch(done)
+    })
+
     it('should have report', (done) => {
       const plugin = plugiator.create('plugin', (app, opts, next) => {
         app.addResults('foo')
@@ -101,6 +125,32 @@ describe('plugin addResults', () => {
       return registrator
         .register({ register: plugin, options: opts})
         .then(() => expect(app.results[0].report).to.eq('foo'))
+        .then(() => done())
+        .catch(done)
+    })
+
+    it('should add results without url', (done) => {
+      const plugin = plugiator.create('plugin', (app, opts, next) => {
+        app.addResults('foo')
+        next()
+      })
+      return registrator
+        .register({ register: plugin })
+        .then(() => expect(app.results[0].report).to.eq('foo'))
+        .then(() => expect(app.results[0].url).to.be.undefined)
+        .then(() => done())
+        .catch(done)
+    })
+
+    it('should add results without pageId', (done) => {
+      const plugin = plugiator.create('plugin', (app, opts, next) => {
+        app.addResults('foo')
+        next()
+      })
+      return registrator
+        .register({ register: plugin })
+        .then(() => expect(app.results[0].report).to.eq('foo'))
+        .then(() => expect(app.results[0].pageId).to.be.undefined)
         .then(() => done())
         .catch(done)
     })

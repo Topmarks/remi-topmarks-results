@@ -21,7 +21,12 @@ export default function (opts) {
         if (plugin.options.hasOwnProperty('pageId')) results.pageId = plugin.options.pageId
         results.plugin = pluginName;
         if (plugin.options.hasOwnProperty('url')) results.url = plugin.options.url;
-        results.timestamp = (timestamp)? timestamp: Date.now();
+        if(timestamp) {
+          timestamp = new Date(timestamp)
+        } else {
+          timestamp = new Date()
+        }
+        results.timestamp = timestamp.getTime();
         results.report = report;
         target.results.push(results);
       },
