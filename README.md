@@ -6,7 +6,7 @@ A [remi](https://github.com/remijs/remi) extension that adds the addResults meth
 
 ## Installation
 
-```
+```sh
 npm i remi-topmarks-results
 ```
 
