@@ -1,6 +1,6 @@
 {
   "name": "remi-topmarks-results",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A remi extension that adds the addResults method to the target.",
   "main": "lib/remi-topmarks-results.js",
   "scripts": {
