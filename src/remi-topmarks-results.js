@@ -1,35 +1,35 @@
 import camelCase from 'camelcase';
 
 export default function (opts) {
-  opts = opts || {}
+  const options = opts || {};
 
   function getPluginName(plugin) {
-    if (opts.camelCase === false) return plugin.name
+    if (options.camelCase === false) return plugin.name;
 
-    return camelCase(plugin.name)
+    return camelCase(plugin.name);
   }
 
   return (next, target, plugin, cb) => {
-    const pluginName = getPluginName(plugin)
+    const pluginName = getPluginName(plugin);
 
-    target.results = target.results || []
-    target.root.results = target.results
+    target.results = target.results || [];
+    target.root.results = target.results;
 
     next(Object.assign({}, target, {
       addResults(report, timestamp = false) {
-        let results = {};
-        if (plugin.options.hasOwnProperty('pageId')) results.pageId = plugin.options.pageId
-        results.plugin = pluginName;
-        if (plugin.options.hasOwnProperty('url')) results.url = plugin.options.url;
-        if(timestamp) {
-          timestamp = new Date(timestamp)
-        } else {
-          timestamp = new Date()
+        const result = {};
+        if (plugin.options.hasOwnProperty('pageId')) result.pageId = plugin.options.pageId;
+        result.plugin = pluginName;
+        if (plugin.options.hasOwnProperty('url')) result.url = plugin.options.url;
+        let time = new Date();
+        if (timestamp) {
+          time = new Date(timestamp);
         }
-        results.timestamp = timestamp.getTime();
-        results.report = report;
-        target.results.push(results);
+        result.timestamp = time.getTime();
+        result.report = report;
+        target.results.push(result);
+        return result;
       },
-    }), plugin, cb)
-  }
+    }), plugin, cb);
+  };
 }
