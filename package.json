@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Topmarks/remi-topmarks-results#readme",
   "peerDependencies": {
-    "topmarks": "0.4.x"
+    "remi": "2.x.x"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
