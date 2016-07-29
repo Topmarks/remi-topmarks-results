@@ -3,4 +3,4 @@ sudo: false
 node_js:
   - "6.2.2"
 after_script:
-  - npm run coveralls
+  - npm run codeclimate
