@@ -2,8 +2,11 @@
   "name": "remi-topmarks-results",
   "version": "1.0.0",
   "description": "A remi extension that adds the addResults method to the target.",
-  "main": "lib/index.js",
+  "main": "lib/remi-topmarks-results.js",
   "scripts": {
+    "prepublish": "npm run compile",
+    "compile": "babel -d lib/ src/",
+    "compile-watch": "babel --watch -d lib/ src/",
     "test": "mocha --compilers js:babel-register test",
     "coverage": "nyc --require babel-core/register npm test",
     "coveralls": "npm run coverage && nyc report --reporter=text-lcov | coveralls"
