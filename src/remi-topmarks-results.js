@@ -1,5 +1,34 @@
 import camelCase from 'camelcase';
 
+/**
+ *  Public: returns remi extention that adds the `addResults` method to app/target
+ *
+ *  * `opts` {Object} options - supports `options.camelCase` as a boolean to set plugin name.
+ *
+ *  ## Example
+ *
+ *  Register the extension in the registration app.
+ *
+ *    import remi from 'remi';
+ *    import remiExpose from 'remi-topmarks-results';
+ *    const app = {};
+ *    const registrator = remi(app);
+ *    registrator.hook(addResults());
+ *    registrator.register({register: require('sample-plugin')});
+ *
+ *  Then plugins can use the `addResults` method:
+ *
+ *    let samplePlugin = (app, options next) => {
+ *      // do some stuff and gather the results
+ *      app.addResults('foo');
+ *      next();
+ *    }
+ *    samplePlugin.attributes = {
+ *      pkg: require('../package.json')
+ *    }
+ *
+ *  Returns Function.
+ */
 export default function (opts) {
   const options = opts || {};
 
@@ -8,7 +37,6 @@ export default function (opts) {
 
     return camelCase(plugin.name);
   }
-
   return (next, target, plugin, cb) => {
     const pluginName = getPluginName(plugin);
 
@@ -16,6 +44,12 @@ export default function (opts) {
     target.root.results = target.results;
 
     next(Object.assign({}, target, {
+      /**
+       * Method added to plugins.
+       * @param {*} report - Any value to store as the plugin result.
+       * @param {string|number} [timestamp=false] - The timestamp of when report was run.
+       * If excluded or false addResults will generate a timestamp.
+       */
       addResults(report, timestamp = false) {
         const result = {};
         if (plugin.options.hasOwnProperty('pageId')) result.pageId = plugin.options.pageId;

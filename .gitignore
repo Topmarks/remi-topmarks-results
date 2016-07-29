@@ -1,5 +1,7 @@
 lib
 
+docs.json
+
 # Logs
 logs
 *.log
